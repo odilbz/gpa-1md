@@ -370,6 +370,12 @@ body[dir="rtl"] {
   animation: fadeUp .5s .18s ease both;
 }
 
+/* ── Mobile horizontal scroll ── */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .col-header {
   display: grid;
   grid-template-columns: 36px 1fr 90px 90px 160px 60px 90px 38px;
@@ -1253,17 +1259,15 @@ body[dir="rtl"] {
   }
 
   .col-header {
-    display: none;
+    display: grid;
+    min-width: 620px;
   }
 
   .mod-row {
-    grid-template-columns: 1fr 70px 70px 128px 46px 70px 30px;
+    grid-template-columns: 28px 1fr 70px 70px 128px 46px 70px 30px;
     gap: 6px;
     padding: 9px 12px;
-  }
-
-  .row-idx {
-    display: none;
+    min-width: 620px;
   }
 
   .dash-score-block {
