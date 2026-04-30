@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GPA Calculator — LMD Algeria</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&family=Noto+Kufi+Arabic:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+</head>
+<body>
+
+  <div class="atm-noise"    aria-hidden="true"></div>
+  <div class="atm-gradient" aria-hidden="true"></div>
+
+  <div class="page-wrap">
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+      <div class="lang-switcher" id="langSwitcher">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn"        data-lang="fr">FR</button>
+        <button class="lang-btn"        data-lang="ar">AR</button>
+      </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="site-header">
+      <div class="header-eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span data-i18n="eyebrow">Algerian University · LMD System</span>
+      </div>
+      <h1 class="site-title">
+        <span data-i18n="title1">Semester Average</span><br>
+        <em class="title-accent" data-i18n="title2">GPA Calculator</em>
+      </h1>
+      <p class="site-caption" data-i18n="caption">
+        Supports Exam / TD–TP weighting and the Algerian credit system
+      </p>
+    </header>
+
+    <!-- CONTROLS -->
+    <div class="controls-strip">
+      <div class="strip-group">
+        <span class="strip-label" data-i18n="semester">Semester</span>
+        <div class="sem-pills" id="semPills">
+          <button class="s-pill active" data-sem="S1">S1</button>
+          <button class="s-pill"        data-sem="S2">S2</button>
+          <button class="s-pill"        data-sem="S3">S3</button>
+          <button class="s-pill"        data-sem="S4">S4</button>
+          <button class="s-pill"        data-sem="S5">S5</button>
+          <button class="s-pill"        data-sem="S6">S6</button>
+        </div>
+      </div>
+      <div class="strip-group">
+        <span class="strip-label" data-i18n="globalWeight">Global Weighting</span>
+        <div class="preset-pills">
+          <button class="p-pill active" data-exam="60"  data-td="40">60/40</button>
+          <button class="p-pill"        data-exam="67"  data-td="33">67/33</button>
+          <button class="p-pill"        data-exam="100" data-td="0">100/0</button>
+          <button class="p-pill"        data-exam="0"   data-td="100">0/100</button>
+        </div>
+      </div>
+      <div class="strip-actions">
+        <button class="btn-ghost" id="btnReset">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
+          <span data-i18n="reset">Reset</span>
+        </button>
+        <button class="btn-primary" id="btnCalc">
+          <span data-i18n="calculate">Calculate Average</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-wrap">
+      <div class="col-header">
+        <div class="ch ch-idx">#</div>
+        <div class="ch ch-name" data-i18n="colModule">Module / Subject</div>
+        <div class="ch ch-exam">
+          <span data-i18n="colExam">Exam</span>
+          <span class="ch-sub">/20</span>
+        </div>
+        <div class="ch ch-td">
+          <span data-i18n="colTd">TD / TP</span>
+          <span class="ch-sub">/20</span>
+        </div>
+        <div class="ch ch-weight">
+          <span data-i18n="colWeight">Weighting</span>
+          <span class="ch-sub">Exam % / TD %</span>
+        </div>
+        <div class="ch ch-coef"><span data-i18n="colCoef">Coef.</span></div>
+        <div class="ch ch-avg">
+          <span data-i18n="colAvg">Average</span>
+          <span class="ch-sub" data-i18n="colAvgSub">Module</span>
+        </div>
+        <div class="ch ch-del"></div>
+      </div>
+
+      <div class="rows-list" id="rowsList"></div>
+
+      <button class="btn-add-row" id="btnAdd">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span data-i18n="addModule">Add a module</span>
+      </button>
+    </div>
+
+    <!-- ERROR -->
+    <div class="error-bar" id="errorBar" hidden>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span id="errorMsg"></span>
+    </div>
+
+    <!-- RESULT DASHBOARD -->
+    <div class="result-dash" id="resultDash" hidden>
+
+      <div class="dash-score-block">
+        <!-- Print button -->
+        <button class="btn-print" id="btnPrint" onclick="window.print()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          <span data-i18n="print">Print Results</span>
+        </button>
+
+        <div class="dash-score-inner">
+          <span class="ds-label" data-i18n="semAvg">Semester Average</span>
+          <div class="ds-number-row">
+            <span class="ds-number" id="dsNumber">—</span>
+            <span class="ds-base">/20</span>
+          </div>
+          <div class="ds-mention" id="dsMention"></div>
+        </div>
+
+        <div class="dash-gauge-wrap">
+          <svg class="dash-gauge" viewBox="0 0 120 70" fill="none">
+            <path d="M 10 65 A 50 50 0 0 1 110 65"
+                  stroke="rgba(255,255,255,0.07)" stroke-width="10"
+                  stroke-linecap="round" fill="none"/>
+            <path id="gaugeArc"
+                  d="M 10 65 A 50 50 0 0 1 110 65"
+                  stroke="#3b82f6" stroke-width="10"
+                  stroke-linecap="round" fill="none"
+                  stroke-dasharray="0 157"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="dash-stats">
+        <div class="stat-card">
+          <span class="sc-val" id="scCoef">—</span>
+          <span class="sc-lbl" data-i18n="totalCoef">Total Coef.</span>
+        </div>
+        <div class="stat-card">
+          <span class="sc-val" id="scEarned">—</span>
+          <span class="sc-lbl" data-i18n="creditsEarned">Credits Earned</span>
+        </div>
+        <div class="stat-card">
+          <span class="sc-val" id="scRate">—</span>
+          <span class="sc-lbl" data-i18n="validRate">Validation Rate</span>
+        </div>
+        <div class="stat-card">
+          <span class="sc-val" id="scCount">—</span>
+          <span class="sc-lbl" data-i18n="modules">Modules</span>
+        </div>
+      </div>
+
+      <div class="breakdown-wrap">
+        <div class="bk-title" data-i18n="breakdown">Module Breakdown</div>
+        <div class="bk-header">
+          <span data-i18n="colModule">Module</span>
+          <span data-i18n="colExam">Exam</span>
+          <span data-i18n="colTd">TD/TP</span>
+          <span data-i18n="colWeight">Weight</span>
+          <span data-i18n="colCoef">Coef.</span>
+          <span data-i18n="colAvg">Average</span>
+          <span data-i18n="weighted">Weighted</span>
+          <span data-i18n="status">Status</span>
+        </div>
+        <div class="bk-rows" id="bkRows"></div>
+      </div>
+
+      <div class="formula-strip">
+        <span class="fs-label" data-i18n="formula">Formula</span>
+        <code class="fs-code">Mod.Avg = (Exam × Pe) + (TD × Ptd)</code>
+        <span class="fs-sep">·</span>
+        <code class="fs-code">Sem.Avg = Σ(Avg × Coef) ÷ Σ(Coef)</code>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-stamp">
+          <span class="stamp-dot"></span>
+          <span data-i18n="devBy">Developed by</span>
+          &nbsp;<strong>Odil</strong>
+        </div>
+        <span class="footer-sep">·</span>
+        <span class="footer-year">© 2026 — LMD Algeria GPA Calculator</span>
+      </div>
+    </footer>
+
+  </div><!-- /page-wrap -->
+
+  <!-- Print-only header -->
+  <div class="print-header" id="printHeader">
+    LMD Algeria GPA Calculator — Developed by Odil — 2026
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
