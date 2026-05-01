@@ -76,38 +76,31 @@
 
     <!-- TABLE -->
     <div class="table-wrap">
-<<<<<<< HEAD
       <div class="table-scroll">
-=======
->>>>>>> 85b69ca72eec5a31748852517fef285883f031a9
-      <div class="col-header">
-        <div class="ch ch-idx">#</div>
-        <div class="ch ch-name" data-i18n="colModule">Module / Subject</div>
-        <div class="ch ch-exam">
-          <span data-i18n="colExam">Exam</span>
-          <span class="ch-sub">/20</span>
+        <div class="col-header">
+          <div class="ch ch-idx">#</div>
+          <div class="ch ch-name" data-i18n="colModule">Module / Subject</div>
+          <div class="ch ch-exam">
+            <span data-i18n="colExam">Exam</span>
+            <span class="ch-sub">/20</span>
+          </div>
+          <div class="ch ch-td">
+            <span data-i18n="colTd">TD / TP</span>
+            <span class="ch-sub">/20</span>
+          </div>
+          <div class="ch ch-weight">
+            <span data-i18n="colWeight">Weighting</span>
+            <span class="ch-sub">Exam % / TD %</span>
+          </div>
+          <div class="ch ch-coef"><span data-i18n="colCoef">Coef.</span></div>
+          <div class="ch ch-avg">
+            <span data-i18n="colAvg">Average</span>
+            <span class="ch-sub" data-i18n="colAvgSub">Module</span>
+          </div>
+          <div class="ch ch-del"></div>
         </div>
-        <div class="ch ch-td">
-          <span data-i18n="colTd">TD / TP</span>
-          <span class="ch-sub">/20</span>
-        </div>
-        <div class="ch ch-weight">
-          <span data-i18n="colWeight">Weighting</span>
-          <span class="ch-sub">Exam % / TD %</span>
-        </div>
-        <div class="ch ch-coef"><span data-i18n="colCoef">Coef.</span></div>
-        <div class="ch ch-avg">
-          <span data-i18n="colAvg">Average</span>
-          <span class="ch-sub" data-i18n="colAvgSub">Module</span>
-        </div>
-        <div class="ch ch-del"></div>
-      </div>
-
-      <div class="rows-list" id="rowsList"></div>
-<<<<<<< HEAD
+        <div class="rows-list" id="rowsList"></div>
       </div><!-- /table-scroll -->
-=======
->>>>>>> 85b69ca72eec5a31748852517fef285883f031a9
 
       <button class="btn-add-row" id="btnAdd">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -123,14 +116,11 @@
 
     <!-- RESULT DASHBOARD -->
     <div class="result-dash" id="resultDash" hidden>
-
       <div class="dash-score-block">
-        <!-- Print button -->
         <button class="btn-print" id="btnPrint" onclick="window.print()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
           <span data-i18n="print">Print Results</span>
         </button>
-
         <div class="dash-score-inner">
           <span class="ds-label" data-i18n="semAvg">Semester Average</span>
           <div class="ds-number-row">
@@ -139,17 +129,10 @@
           </div>
           <div class="ds-mention" id="dsMention"></div>
         </div>
-
         <div class="dash-gauge-wrap">
           <svg class="dash-gauge" viewBox="0 0 120 70" fill="none">
-            <path d="M 10 65 A 50 50 0 0 1 110 65"
-                  stroke="rgba(255,255,255,0.07)" stroke-width="10"
-                  stroke-linecap="round" fill="none"/>
-            <path id="gaugeArc"
-                  d="M 10 65 A 50 50 0 0 1 110 65"
-                  stroke="#3b82f6" stroke-width="10"
-                  stroke-linecap="round" fill="none"
-                  stroke-dasharray="0 157"/>
+            <path d="M 10 65 A 50 50 0 0 1 110 65" stroke="rgba(255,255,255,0.07)" stroke-width="10" stroke-linecap="round" fill="none"/>
+            <path id="gaugeArc" d="M 10 65 A 50 50 0 0 1 110 65" stroke="#3b82f6" stroke-width="10" stroke-linecap="round" fill="none" stroke-dasharray="0 157"/>
           </svg>
         </div>
       </div>
@@ -211,7 +194,6 @@
 
   </div><!-- /page-wrap -->
 
-  <!-- Print-only header -->
   <div class="print-header" id="printHeader">
     LMD Algeria GPA Calculator — Developed by Odil — 2026
   </div>

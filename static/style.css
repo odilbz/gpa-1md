@@ -365,10 +365,13 @@ body[dir="rtl"] {
   background: var(--surface-1);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden;
   animation: fadeUp .5s .18s ease both;
+}
+
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .col-header {
