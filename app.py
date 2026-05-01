@@ -201,8 +201,10 @@ def calculate():
         "module_count":     len(results),
         "modules":          results,
     })
->>>>>>> 85b69ca72eec5a31748852517fef285883f031a9
+
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=10000)
+    
+    
